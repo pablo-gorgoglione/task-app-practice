@@ -5,8 +5,8 @@ import Overview from "./components/Overview";
 import uniqid from "uniqid";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       task: {
         text: '', 
@@ -15,13 +15,24 @@ class App extends Component {
       tasks: [],
     };
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.onSubmitTask = this.onSubmitTask.bind(this);
-
   }
 
+  handleDelete = (newTasks) =>{
+      // if(newTasks == null ){
+      //   this.setState({
+      //     tasks: [],
+      //     })
+      // }
+      console.log (newTasks.length + '  check 3');
+      // this.setState({
+      //   tasks: [],
+      //   })
+      // this.setState({
+      // tasks: newTasks,
+      // })
+  }
 
-  handleChange(e){
+  handleChange = (e) => {
     this.setState({
       task: {
         text: e.target.value,
@@ -29,19 +40,10 @@ class App extends Component {
       },
     });
   };
-  /* handleDelete = (newTasks) =>{
-    this.setState({
-      tasks: newTasks,
-    })
-  } */
 
-  handleDelete (){
-    console.log("hola giles");
-  }
 
-  onSubmitTask(e){
+  onSubmitTask = (e) => {
     e.preventDefault();
-    if(this.state.task.text === ''){console.log('Holagiles')};
     this.setState({
       tasks: this.state.tasks.concat(this.state.task),
       task: {
@@ -49,27 +51,23 @@ class App extends Component {
         id: uniqid()
       },
     });
-    console.log(this.state.tasks)
   };
 
   render() {
-    const { task, tasks } = this.state;
+   // const { task, tasks } = this.state.;
     return (
       <div>
         <form onSubmit={this.onSubmitTask}>
-          <label htmlFor="taskInput">Write a task</label>
+          <label htmlFor="taskInput">Enter task</label>
           <input
             onChange={this.handleChange}
-            value={task.text}
+            value={this.state.task.text}
             type="text"
             id="taskInput"
           />
-          {
-            task.text !== '' &&
-            <button type="submit">Add Task</button>
-          }
+          <button type="submit">Add Task</button>
         </form>
-        <Overview tasks={tasks} onDelete={this.handleDelete} /> 
+        <Overview tasks={this.state.tasks} onDelete={this.handleDelete} /> 
       </div>
     );
   }
@@ -77,3 +75,7 @@ class App extends Component {
 // onDelete={this.handleDelete} 
 
 export default App;
+// {
+//   task.text !== '' &&
+//   // <button type="submit">Add Task</button>
+// }
