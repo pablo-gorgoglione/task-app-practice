@@ -9,28 +9,19 @@ class App extends Component {
     super();
     this.state = {
       task: {
-        text: '', 
-        id: uniqid()
+        text: "",
+        id: uniqid(),
       },
       tasks: [],
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  handleDelete = (newTasks) =>{
-      // if(newTasks == null ){
-      //   this.setState({
-      //     tasks: [],
-      //     })
-      // }
-      console.log (newTasks.length + '  check 3');
-      // this.setState({
-      //   tasks: [],
-      //   })
-      // this.setState({
-      // tasks: newTasks,
-      // })
-  }
+  handleDelete = (newTasks) => {
+    this.setState({
+      tasks: newTasks,
+    });
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -41,41 +32,35 @@ class App extends Component {
     });
   };
 
-
   onSubmitTask = (e) => {
     e.preventDefault();
     this.setState({
       tasks: this.state.tasks.concat(this.state.task),
       task: {
-        text: '', 
-        id: uniqid()
+        text: "",
+        id: uniqid(),
       },
     });
   };
 
   render() {
-   // const { task, tasks } = this.state.;
+    const { tasks, task } = this.state;
     return (
       <div>
         <form onSubmit={this.onSubmitTask}>
           <label htmlFor="taskInput">Enter task</label>
           <input
             onChange={this.handleChange}
-            value={this.state.task.text}
+            value={task.text}
             type="text"
             id="taskInput"
           />
-          <button type="submit">Add Task</button>
+          {task.text !== "" && <button type="submit">Add Task</button>}
         </form>
-        <Overview tasks={this.state.tasks} onDelete={this.handleDelete} /> 
+        <Overview tasks={tasks} onDelete={this.handleDelete} />
       </div>
     );
   }
 }
-// onDelete={this.handleDelete} 
 
 export default App;
-// {
-//   task.text !== '' &&
-//   // <button type="submit">Add Task</button>
-// }
