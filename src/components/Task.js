@@ -1,29 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Task = (props) => {
+  const [edit, setEdit] = useState(false);
+  const [inputText, setInputText] = useState(props.task.text);
   const { task, tasks } = props;
 
   const onDelete = () => {
     props.onDelete(tasks.filter((t) => t.id !== task.id));
   };
+  const openEdit = () => {
+    setEdit(!edit);
+    if (edit === true) {
+      props.onEdit(inputText, task.id);
+    }
+  };
+  const editTextHandler = (e) => {
+    setInputText(e.target.value);
+  };
 
   return (
     <li key={props.task.key}>
-      {props.task.text}
+      {task.text}
       <button onClick={onDelete}> Delete </button>
+      <button onClick={openEdit}> {edit ? "Submit" : "Edit"}</button>
+      {edit === true && (
+        <input onChange={editTextHandler} type="text" value={inputText} />
+      )}
     </li>
   );
 };
 
 export default Task;
-
-// onDelete = () => {
-//     let newTasks = this.props.tasks
-//     console.log(this.props.tasks.stringify+ '   --state tasks')
-//     console.log(this.props.task.text+ '   --state task')
-//     // console.log(newTasks.stringify + '    --Sin sacar weas')
-//     this.props.onDelete(newTasks.filter((t)=> t.id !== this.props.task.id))
-//     // console.log(this.props.tasks.filter((t)=> t.id !== this.props.task.id))
-//     // console.log(newTasks.legnht + 'saque las weas')
-// };
-// //<button onClick={this.onDelete}> Delete </button>
+//onBlur={openEdit}

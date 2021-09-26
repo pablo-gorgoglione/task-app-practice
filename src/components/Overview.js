@@ -13,6 +13,7 @@ const Overview = (props) => {
             tasks={tasks}
             key={task.id}
             onDelete={props.onDelete}
+            onEdit={props.onEdit}
           />
         );
       })}

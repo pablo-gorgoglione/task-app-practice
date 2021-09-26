@@ -15,14 +15,26 @@ class App extends Component {
       tasks: [],
     };
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
+  //news methods
   handleDelete = (newTasks) => {
     this.setState({
       tasks: newTasks,
     });
   };
 
+  handleEdit = (text, id) => {
+    const taskIndex = this.state.tasks.findIndex((t) => t.id === id);
+    let newTasks = [...this.state.tasks];
+    newTasks[taskIndex] = { ...newTasks[taskIndex], text: text };
+    this.setState({
+      tasks: newTasks,
+    });
+  };
+
+  // olds
   handleChange = (e) => {
     this.setState({
       task: {
@@ -57,7 +69,11 @@ class App extends Component {
           />
           {task.text !== "" && <button type="submit">Add Task</button>}
         </form>
-        <Overview tasks={tasks} onDelete={this.handleDelete} />
+        <Overview
+          tasks={tasks}
+          onEdit={this.handleEdit}
+          onDelete={this.handleDelete}
+        />
       </div>
     );
   }
